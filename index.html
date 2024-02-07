@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de Noms et Prénoms</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <div class="registred">
+            <h1>Enregistré</h1>
+            <div class="search-bar">
+                <input type="text" id="search-input" name="search" placeholder="Entrez un nom ou prénom">
+            </div>
+            <table id="results-table">
+                    <tr>
+                        <th>Présence</th>
+                        <th>ADH</th>
+                        <th>Civilité</th>
+                        <th>NOM</th>
+                        <th>PRENOM</th>
+                        <th>STATUT</th>
+                        <th>Réadhèsion</th>
+                    </tr>
+                <tbody id="data-body"></tbody>
+            </table>
+        </div>
+        <div class="to_register">
+            <h1>A enregister</h1><br>
+            <form action="register.php" method="POST">
+                <label for="civilite">Civilité *</label>
+                <select id="civilite" name="civilite">
+                    <option value="" selected>-- Sélectionnez un statut --</option>
+                    <option value="Monsieur">Monsieur</option>
+                    <option value="Madame">Madame</option>
+                </select><br><br>
+
+                <label for="nom">Nom *</label>
+                <input type="text" id="nom" name="nom"><br><br>
+
+                <label for="prenom">Prénom *</label>
+                <input type="text" id="prenom" name="prenom"><br><br>
+
+                <label for="mail">Mail *</label>
+                <input type="email" id="mail" name="mail", value="test@gmail.com"><br><br>
+
+                <label for="adhesion">Adhésion *</label>
+                <select id="adhesion" name="adhesion">
+                    <option value="adhere" selected>Adhère</option>
+                    <option value="adhere_peut_etre">Adhère peut-être</option>
+                    <option value="n_adhere_pas">N'adhère pas</option>
+                </select><br><br>
+
+
+                <input type="submit" value="Enregistrer">
+            </form>
+        </div>
+    </main>
+</body>
+</html>
+
+<script>
+    document.getElementById("results-table").addEventListener('change', function(event) {
+        const target = event.target;
+        if (target && target.classList.contains('myCheckbox')) {
+            var post_data = new FormData();
+            const rowData = target.getAttribute('data-row-data');
+            post_data.append('adh', rowData);
+            post_data.append('presence', target.checked ? 1 : 0);
+            const selectElement = target.closest('tr').querySelector('select[name="proba_adh"]');
+            if (selectElement) {
+                const probaAdhValue = selectElement.value;
+                post_data.append('proba_adh', probaAdhValue);
+            }
+            var ajax = new XMLHttpRequest();
+            ajax.open("POST", "presence.php", true);
+            ajax.send(post_data);
+            ajax.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText)
+                }
+        }
+    }});
+
+    document.getElementById("search-input").addEventListener('input', function() {
+        if (this.value == "") {
+            document.getElementById("data-body").innerHTML = "";
+        }
+        else {
+            var post_data = new FormData();
+            post_data.append('input', this.value);
+
+            var ajax = new XMLHttpRequest();
+            ajax.open("POST", "rechercher.php", true);
+            ajax.send(post_data);
+
+            ajax.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    console.log(this.responseText);
+                    var html = "";
+                    for (var a = 0; a < data.length; a++) {
+                        var adh = data[a].adh;
+                        var civilite = data[a].civilite;
+                        var prenom = data[a].prenom;
+                        var nom = data[a].nom;
+                        var statut = data[a].statut;
+
+                        var rowDataAttribute = JSON.stringify(data[a].adh);
+
+                        html += "<tr>";
+                        html += "<td> <input type='checkbox' class='myCheckbox' data-row-data='" + rowDataAttribute + "'> </td>";
+                        html += "<td>" + adh + "</td>";
+                        html += "<td>" + civilite + "</td>";
+                        html += "<td>" + nom + "</td>";
+                        html += "<td>" + prenom + "</td>";
+                        html += "<td>" + statut + "</td>";
+                        if (statut === "NON A JOUR") {
+                            html += "<td>" + '<select name="proba_adh"><option value="radhere">Réadhère</option><option value="radhere_peut_etre">Réadhère peut-être</option><option value="ne_radhere_pas">Ne réadhère pas</option></select>'+"</td>";
+                        }
+                        else if (statut === "NON ADHERENT") {
+                            html += "<td>" + '<select name="proba_adh"><option value="adhere">Adhère</option><option value="adhere_peut_etre">Adhère peut-être</option><option value="n_adhere_pas">N\'adhère pas</option></select>'+"</td>";
+                        }
+                        html += "</tr>";
+                    }
+                    document.getElementById("data-body").innerHTML = html;
+                }
+            }
+        }
+    })
+</script>

@@ -1,0 +1,182 @@
+/* Réinitialisation des styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styles pour le corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Styles pour l'en-tête */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+/* Styles pour la zone de recherche */
+.search-bar {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Styles pour la zone des résultats */
+#results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#results-table th {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+}
+
+#results-table tbody tr:hover {
+    background-color: #ccc;
+}
+
+#results-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+/* Styles pour la zone d'inscription */
+.registred {
+    background-color: #444; /* Couleur modifiée */
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.to_register {
+    background-color: #f8f8f8; /* Couleur modifiée */
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px; /* Espacement ajouté */
+}
+
+.to_register form {
+    max-width: 600px; /* Largeur augmentée */
+    margin: 0 auto;
+}
+
+.to_register label {
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.to_register input[type="text"],
+.to_register input[type="email"],
+.to_register input[type="date"],
+.to_register input[type="tel"],
+.to_register select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.to_register select {
+    appearance: none;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 30px;
+}
+
+.to_register input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.to_register input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Styles for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+    /* Add your larger screen styles here */
+}
+
+/* Styles for smaller screens (e.g., phones) */
+@media (max-width: 767px) {
+    /* Adjust the styles for smaller screens */
+    body {
+        font-size: 14px; /* Reduce the font size for smaller screens */
+    }
+
+    /* Styles for the header */
+    header {
+        padding: 10px 0; /* Reduce header padding for smaller screens */
+    }
+
+    /* Styles for the search bar */
+    .search-bar {
+        margin: 10px auto; /* Reduce margin for smaller screens */
+    }
+
+    /* Adjust the input size for better usability on mobile */
+    input[type="text"] {
+        font-size: 14px;
+    }
+
+    /* Styles for the results table */
+    #results-table th,
+    #results-table td {
+        font-size: 14px; /* Reduce font size for table on smaller screens */
+    }
+
+    /* Styles for the registration form */
+    .to_register form {
+        padding: 10px; /* Add padding to the form for better spacing on mobile */
+    }
+}
